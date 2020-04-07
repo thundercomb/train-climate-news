@@ -1,0 +1,14 @@
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  entrypoint: /bin/sh
+  args:
+    - '-c'
+    - |
+       docker build -t eu.gcr.io/${PROJECT_ID}/${_IMAGE_NAME} \
+         --build-arg ML_MODELS_BUCKET=${_ML_MODELS_BUCKET} \
+         --build-arg PROJECT_ID=${PROJECT_ID} \
+         .
+images: ['eu.gcr.io/${PROJECT_ID}/${_IMAGE_NAME}']
+substitutions:
+  _IMAGE_NAME: ml-train-climate-news
+  _ML_MODELS_BUCKET: climate-analytics-ml-models

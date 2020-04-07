@@ -1,0 +1,12 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: climate-news-
+spec:
+  entrypoint: train
+  templates:
+  - name: train
+    container:
+      image: eu.gcr.io/climate-poc-01/ml-train-climate-news:latest
+      command: [python3]
+      args: ["train.py"]
