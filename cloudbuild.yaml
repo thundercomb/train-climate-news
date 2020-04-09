@@ -28,3 +28,5 @@ substitutions:
 options:
   env:
   - ML_MODELS_BUCKET=${_ANALYTICS_PROJECT}-models
+
+timeout: 1800s
