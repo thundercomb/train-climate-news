@@ -11,7 +11,7 @@ steps:
   args:
     - '-c'
     - |
-       sed -e "s/\$$PROJECT_ID/$_ANALYTICS_PROJECT/g" \
+       sed -e "s/\$$ANALYTICS_PROJECT/$_ANALYTICS_PROJECT/g" \
            -e "s/\$$ML_MODELS_BUCKET/$$ML_MODELS_BUCKET/g" workflow.yaml.tmpl > workflow.yaml
   dir: /workspace/conf
 
