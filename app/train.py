@@ -42,7 +42,7 @@ def list_blobs(bucket_name, prefix):
 client = bigquery.Client()
 
 query = (
-    "SELECT article FROM `" + os.environ['$PROJECT_ID'] + ".clnn.news`"
+    "SELECT article FROM `" + os.environ['PROJECT_ID'] + ".clnn.news`"
 )
 query_job = client.query(
     query,
