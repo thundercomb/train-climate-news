@@ -10,3 +10,8 @@ spec:
       image: eu.gcr.io/climate-poc-01/ml-train-climate-news:latest
       command: [python3]
       args: ["train.py"]
+      env:
+      - name: PROJECT_ID
+        value: $ANALYTICS_PROJECT
+      - name: ML_MODELS_BUCKET
+        value: $ML_MODELS_BUCKET

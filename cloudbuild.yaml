@@ -1,14 +1,30 @@
 steps:
 - name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'eu.gcr.io/${_ANALYTICS_PROJECT}/${_IMAGE_NAME}', '.']
+  dir: /workspace/app
+
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'eu.gcr.io/${_ANALYTICS_PROJECT}/${_IMAGE_NAME}']
+
+- name: 'gcr.io/cloud-builders/docker'
   entrypoint: /bin/sh
   args:
     - '-c'
     - |
-       docker build -t eu.gcr.io/${PROJECT_ID}/${_IMAGE_NAME} \
-         --build-arg ML_MODELS_BUCKET=${_ML_MODELS_BUCKET} \
-         --build-arg PROJECT_ID=${PROJECT_ID} \
-         .
-images: ['eu.gcr.io/${PROJECT_ID}/${_IMAGE_NAME}']
+       sed -e "s/\$$PROJECT_ID/$_ANALYTICS_PROJECT/g" \
+           -e "s/\$$ML_MODELS_BUCKET/$$ML_MODELS_BUCKET/g" workflow.yaml.tmpl > workflow.yaml
+  dir: /workspace/conf
+
+- name: 'eu.gcr.io/${PROJECT_ID}/kubeflow-tools'
+  entrypoint: /bin/sh
+  args:
+    - '-c'
+    - |
+       python3 /workspace/bin/kfp_deploy.py ${_KUBEFLOW_HOST} "${REPO_NAME}-${SHORT_SHA}" /workspace/conf/workflow.yaml
+
 substitutions:
-  _IMAGE_NAME: ml-train-climate-news
-  _ML_MODELS_BUCKET: climate-analytics-ml-models
+  _IMAGE_NAME: train-iris
+
+options:
+  env:
+  - ML_MODELS_BUCKET=${_ANALYTICS_PROJECT}-models
