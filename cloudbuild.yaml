@@ -23,7 +23,7 @@ steps:
        python3 /workspace/bin/kfp_deploy.py ${_KUBEFLOW_HOST} "${REPO_NAME}-${SHORT_SHA}" /workspace/conf/workflow.yaml
 
 substitutions:
-  _IMAGE_NAME: train-iris
+  _IMAGE_NAME: train-climate-news
 
 options:
   env:
