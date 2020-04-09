@@ -10,6 +10,9 @@ spec:
       image: eu.gcr.io/$ANALYTICS_PROJECT/train-climate-news:latest
       command: [python3]
       args: ["train.py"]
+      resources:
+          limits:
+            memory: 10000Mi
       env:
       - name: PROJECT_ID
         value: $ANALYTICS_PROJECT
